@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="form">
+        <input type="text" id="title" placeholder="Titulo">
+        <input type="text" id="description" placeholder="Descripcion">
+        <button onClick="agregarTarea()">Agregar Tarea</button>
+        <br />
+    </div>
+    <ul id="lista-tareas">
+
+    </ul>
+    <script>
+        let contadorIdTarea = 0;
+
+        class Tareas {
+            constructor(title, description) {
+                this.idTarea = contadorIdTarea++;
+                this.title = title;
+                this.description = description;
+            }
+
+            getIdTarea() {
+                return this.idTarea
+            }
+
+            getTitle() {
+                return this.title
+            }
+
+            getDescription() {
+                return this.description
+            }
+
+            setTitle(title) {
+                this.title = title
+            }
+
+
+            mostrarTareaEnConsola() {
+                console.log(`Id: ${this.getIdTarea()} - Titulo: ${this.getTitle().toString()} - Description: ${this.getDescription()}`)
+            }
+            agregarTareaAlaLista() {
+                const listaTareas = document.getElementById('lista-tareas');
+                listaTareas.innerHTML += `<li id="tarea-${this.getIdTarea()}">Titulo: ${this.getTitle()} - Description: ${this.getDescription()} - <button onClick="eliminarTarea(${this.getIdTarea()})">Eliminar</button></li>`
+            }
+
+        }
+        const eliminarTarea = (id) => {
+            const tarea = document.getElementById(`tarea-${id}`);
+            console.log(tarea)
+            tarea.innerHTML = ''
+        }
+        const agregarTarea = () => {
+            const title = document.getElementById('title')
+            const description = document.getElementById('description')
+            const nuevaTarea = new Tareas(title.value, description.value);
+            nuevaTarea.agregarTareaAlaLista();
+            nuevaTarea.mostrarTareaEnConsola();
+            title.value = ''
+            description.value = ''
+        }
+    </script>
+</body>
+
+</html>
